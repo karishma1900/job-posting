@@ -21,7 +21,7 @@ const Register = () => {
         // Check if the user is already registered
         const checkUserExists = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/check-email/${formData.companyEmail}`);
+                const response = await axios.get(`https://job-posting-6lg2.onrender.com/check-email/${formData.companyEmail}`);
                 if (response.data.exists) {
                     toast.info('You are already registered. Redirecting to login.');
                     navigate('/login'); // Redirect to login if user is already registered
