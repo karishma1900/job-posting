@@ -1,9 +1,7 @@
-// src/Register.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faBuilding, faPhone, faEnvelope, faUsers, faLock } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate, Link } from 'react-router-dom'; // Import Link from react-router-dom
 import logo from "../../assets/cuvet.jpg";
 import "./Register.css";
 
@@ -17,6 +15,26 @@ const Register = () => {
         password: ''
     });
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        // Check if the user is already registered
+        const checkUserExists = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5000/check-email/${formData.companyEmail}`);
+                if (response.data.exists) {
+                    toast.info('You are already registered. Redirecting to login.');
+                    navigate('/login'); // Redirect to login if user is already registered
+                }
+            } catch (error) {
+                console.error('Error checking user existence:', error);
+            }
+        };
+
+        if (formData.companyEmail) {
+            checkUserExists();
+        }
+    }, [formData.companyEmail, navigate]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -37,6 +55,7 @@ const Register = () => {
                 employeeSize: '',
                 password: ''
             });
+            navigate('/verify'); // Navigate to a verification or next step
         } catch (error) {
             console.error('Error during registration:', error);
             if (error.response) {
@@ -55,106 +74,67 @@ const Register = () => {
                 <img src={logo} alt="logo" />
                 <a href="/"><h2>Contact</h2></a>
             </div>
-
             <div className="body">
                 <div className="intro">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore nihil deserunt doloremque...</p>
                 </div>
-
                 <form onSubmit={handleSubmit} className='form'>
                     <h2>Register</h2>
-                    <div className='key'>
-                        <div className="input-container">
-                            <FontAwesomeIcon icon={faUser} className="icon" />
-                            <input 
-                                type="text" 
-                                name="name"
-                                placeholder='Name' 
-                                value={formData.name} 
-                                onChange={handleChange} 
-                                required 
-                            />
-                        </div>
-                    </div>
-                    
-                    <div className='key'>
-                        <div className="input-container">
-                            <FontAwesomeIcon icon={faBuilding} className="icon" />
-                            <input 
-                                type="text" 
-                                name="companyName"
-                                placeholder='Company Name' 
-                                value={formData.companyName} 
-                                onChange={handleChange} 
-                                required 
-                            />
-                        </div>
-                    </div>
-
-                    <div className='key'>
-                        <div className="input-container">
-                            <FontAwesomeIcon icon={faPhone} className="icon" />
-                            <input 
-                                type="tel" 
-                                name="phoneNo" 
-                                placeholder="Phone No"
-                                value={formData.phoneNo} 
-                                onChange={handleChange} 
-                                required 
-                                pattern="[0-9]{10}" 
-                                title="Please enter a valid phone number"
-                            />
-                        </div>
-                    </div>
-
-                    <div className='key'>
-                        <div className="input-container">
-                            <FontAwesomeIcon icon={faEnvelope} className="icon" />
-                            <input 
-                                type="email" 
-                                name="companyEmail" 
-                                placeholder='Company Email'
-                                value={formData.companyEmail} 
-                                onChange={handleChange} 
-                                required 
-                            />
-                        </div>
-                    </div>
-
-                    <div className='key'>
-                        <div className="input-container">
-                            <FontAwesomeIcon icon={faUsers} className="icon" />
-                            <input 
-                                type="number" 
-                                name="employeeSize" 
-                                placeholder='Employee Size'
-                                value={formData.employeeSize} 
-                                onChange={handleChange} 
-                                required 
-                                min="1" 
-                            />
-                        </div>
-                    </div>
-
-                    <div className='key'>
-                        <div className="input-container">
-                            <FontAwesomeIcon icon={faLock} className="icon" />
-                            <input 
-                                type="password" 
-                                name="password" 
-                                placeholder='Password'
-                                value={formData.password} 
-                                onChange={handleChange} 
-                                required 
-                                minLength="6" 
-                            />
-                        </div>
-                    </div>
-
+                    <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder="Name"
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="companyName"
+                        value={formData.companyName}
+                        onChange={handleChange}
+                        placeholder="Company Name"
+                        required
+                    />
+                    <input
+                        type="tel"
+                        name="phoneNo"
+                        value={formData.phoneNo}
+                        onChange={handleChange}
+                        placeholder="Phone Number"
+                        required
+                    />
+                    <input
+                        type="email"
+                        name="companyEmail"
+                        value={formData.companyEmail}
+                        onChange={handleChange}
+                        placeholder="Company Email"
+                        required
+                    />
+                    <input
+                        type="number"
+                        name="employeeSize"
+                        value={formData.employeeSize}
+                        onChange={handleChange}
+                        placeholder="Employee Size"
+                        required
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        placeholder="Password"
+                        required
+                    />
                     <button type="submit" disabled={loading}>
                         {loading ? 'Registering...' : 'Register'}
                     </button>
                 </form>
+                <div className="login-link">
+                    <p>Already registered? <Link to="/login">Login here</Link>.</p> {/* Login Link */}
+                </div>
             </div>
         </div>
     );
