@@ -6,6 +6,7 @@ import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import "./LoginPage.css";
 import logo from "../../assets/cuvet.jpg";
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Login = ({ onLogin }) => {
     const navigate = useNavigate(); // Use useNavigate instead of useHistory
@@ -80,6 +81,9 @@ const Login = ({ onLogin }) => {
                     </div>
 
                     <button type="submit">Login</button>
+                    <div className="login-link">
+                    <p>Already have an account? <Link to="/register">Login here</Link>.</p>
+                </div>
                 </form>
             </div>
         </div>
