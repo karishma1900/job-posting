@@ -29,7 +29,7 @@ const Login = ({ onLogin }) => {
         e.preventDefault();
         console.log('Form Data:', formData);
         try {
-            const response = await axios.post('http://localhost:5000/login', formData);
+            const response = await axios.post('https://job-posting-6lg2.onrender.com/login', formData);
             toast.success(response.data.message);
             onLogin(); // Call the login handler to update authentication state
             navigate('/home'); // Redirect to home page
