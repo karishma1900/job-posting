@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useNavigate, Link } from 'react-router-dom'; // Import Link for navigation
+import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+ 
 import logo from "../../assets/cuvet.jpg";
 import "./Register.css";
 
@@ -18,10 +20,10 @@ const Register = ({ onLogin }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Check if the user is already registered
+        // Check if the user is already registered (assuming you have a function for this)
         const checkUserExists = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/check-email/${formData.companyEmail}`);
+                const response = await axios.get(http://localhost:5000/check-email/${formData.companyEmail});
                 if (response.data.exists) {
                     toast.info('You are already registered. Redirecting to login.');
                     navigate('/login'); // Redirect to login if user is already registered
@@ -81,62 +83,13 @@ const Register = ({ onLogin }) => {
                 <form onSubmit={handleSubmit} className='form'>
                     <h2>Register</h2>
                     {/* Input fields remain unchanged */}
-                    <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        placeholder="Name"
-                        required
-                    />
-                    <input
-                        type="text"
-                        name="companyName"
-                        value={formData.companyName}
-                        onChange={handleChange}
-                        placeholder="Company Name"
-                        required
-                    />
-                    <input
-                        type="tel"
-                        name="phoneNo"
-                        value={formData.phoneNo}
-                        onChange={handleChange}
-                        placeholder="Phone Number"
-                        required
-                    />
-                    <input
-                        type="email"
-                        name="companyEmail"
-                        value={formData.companyEmail}
-                        onChange={handleChange}
-                        placeholder="Company Email"
-                        required
-                    />
-                    <input
-                        type="number"
-                        name="employeeSize"
-                        value={formData.employeeSize}
-                        onChange={handleChange}
-                        placeholder="Employee Size"
-                        required
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        placeholder="Password"
-                        required
-                    />
                     <button type="submit" disabled={loading}>
                         {loading ? 'Registering...' : 'Register'}
                     </button>
-                </form>
-                {/* Added login link below the form */}
-                <div className="login-link">
+                    <div className="login-link">
                     <p>Already have an account? <Link to="/login">Login here</Link>.</p>
                 </div>
+                </form>
             </div>
         </div>
     );
