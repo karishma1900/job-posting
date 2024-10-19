@@ -76,3 +76,8 @@ form button{
 		background-color: transparent;
 	}
 }
+.login-link{
+text-align:center;
+	font-size:18px;
+	color:grey;
+}
