@@ -26,7 +26,7 @@ const Register = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await axios.post('http://localhost:5000/register', formData);
+            const response = await axios.post('https://job-posting-6lg2.onrender.com/register', formData);
             toast.success(response.data.message);
             toast.info('A verification email has been sent to your email address. Please check your inbox.');
             setFormData({
