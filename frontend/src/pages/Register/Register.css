@@ -78,6 +78,7 @@ form button{
 }
 .login-link{
 text-align:center;
+	padding:10px 0px;
 	font-size:18px;
 	color:grey;
 }
