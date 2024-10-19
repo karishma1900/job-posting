@@ -7,7 +7,7 @@ const JobPostingDisplay = () => {
     useEffect(() => {
         const fetchJobPosts = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/job-posts');
+                const response = await axios.get('https://job-posting-6lg2.onrender.com/job-posts');
                 setJobPosts(response.data);
             } catch (error) {
                 console.error('Error fetching job posts:', error);
