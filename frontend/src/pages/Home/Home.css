@@ -1,0 +1,26 @@
+
+
+.main-body{
+	position: relative;
+	margin-left: 140px;
+	padding:30px 40px;
+	justify-content: center;
+	
+	
+}
+button{
+	
+	padding: 15px 40px;
+	border-radius: 15px;
+	background-color: rgb(6, 84, 158);
+	color: white;
+	font-size: 20px;
+	border: none;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+	&:hover{
+		border: 1px solid rgb(6, 84, 158);
+		color: black;
+		background-color: transparent;
+	}
+}
