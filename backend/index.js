@@ -86,7 +86,7 @@ app.post('/register', async (req, res) => {
             from: process.env.EMAIL_USER,
             to: companyEmail,
             subject: 'Email Verification',
-            text: `Hello ${name},\n\nPlease verify your email by clicking the link: ${process.env.BASE_URL}verify?email=${companyEmail}\n\nThank you!`,
+            text: `Hello ${name},\n\nPlease verify your email by clicking the link: ${process.env.BASE_URL}/verify?email=${companyEmail}\n\nThank you!`,
         };
 
         await transporter.sendMail(mailOptions);
