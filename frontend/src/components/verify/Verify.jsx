@@ -20,7 +20,7 @@ const Verify = () => {
 
             try {
                 // Make a request to your backend for verification
-                const response = await axios.get(`https://job-posting-6lg2.onrender.com/verify?email=${companyEmail}`);
+                const response = await axios.get(`https://job-posting1-jdts.onrender.com/verify?email=${companyEmail}`);
                 
                 // Notify user of success
                 toast.success(response.data.message);
