@@ -10,9 +10,7 @@
 	
 }
 button{
-	display:flex;
-	align-items:center;
-	justidy-content:center;
+	
 	padding: 15px 40px;
 	border-radius: 15px;
 	background-color: rgb(6, 84, 158);
