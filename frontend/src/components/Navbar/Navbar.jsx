@@ -1,11 +1,18 @@
-// src/components/Navbar/Navbar.js
 import React from 'react';
-import logo from '../../assets/cuvet.jpg'; // Use your actual logo
+import logo from '../../assets/cuvet.jpg'; // Replace with your actual logo path
 import './Navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({ userName, onLogout }) => {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        onLogout(); // This will handle the actual logout logic in the parent component
+        navigate('/login'); // Redirect to login page after logout
+    };
+
     return (
         <div className="main">
             <nav className="navbar">
@@ -16,13 +23,13 @@ const Navbar = ({ userName, onLogout }) => {
                     {userName ? (
                         <>
                             <span className="user-name">{userName}</span>
-                            <button className="logout-btn" onClick={onLogout}>Logout</button>
+                            <button className="logout-btn" onClick={handleLogout}>Logout</button>
                         </>
                     ) : (
                         <a href="/contact">Contact</a>
                     )}
                     <div className="dropdown">
-                        <button className="dropbtn">Your Name</button>
+                        <button className="dropbtn">{userName || "Your Name"}</button>
                         <div className="dropdown-content">
                             <a href="/profile">Profile</a>
                             <a href="/settings">Settings</a>
