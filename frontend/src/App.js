@@ -1,3 +1,4 @@
+// App.js
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -7,7 +8,7 @@ import Login from './pages/LoginPage/LoginPage';
 import Home from './pages/Home/Home';
 import Navbar from './components/Navbar/Navbar';
 import JobPostingDisplay from './components/JobPosting/JobPosting';
-import Verify from './components/verify/Verify'; // Import the Verify component
+import Verify from './components/verify/Verify';
 
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -22,10 +23,10 @@ const App = () => {
         }
     }, []);
 
-    const handleLogin = (name) => {
+    const handleLogin = (email) => {
         setIsAuthenticated(true);
-        setUserName(name); // Set username after login
-        localStorage.setItem('userName', name); // Store userName in localStorage
+        setUserName(email); // Set the email as username
+        localStorage.setItem('userName', email); // Store email in localStorage
         toast.success('Login successful!');
     };
 
