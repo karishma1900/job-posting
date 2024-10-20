@@ -70,6 +70,7 @@ form button{
 	border: none;
 	cursor: pointer;
 	transition: all 0.3s ease-in-out;
+	text-align:center;
 	&:hover{
 		border: 1px solid rgb(6, 84, 158);
 		color: black;
