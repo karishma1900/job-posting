@@ -24,14 +24,14 @@ const App = () => {
 
     const handleLogin = (name) => {
         setIsAuthenticated(true);
-        setUserName(name);
+        setUserName(name); // Set username after login
         localStorage.setItem('userName', name); // Store userName in localStorage
         toast.success('Login successful!');
     };
 
     const handleLogout = () => {
         setIsAuthenticated(false);
-        setUserName('');
+        setUserName(''); // Clear username on logout
         localStorage.removeItem('userName'); // Remove userName from localStorage
         toast.info('You have logged out.');
     };
