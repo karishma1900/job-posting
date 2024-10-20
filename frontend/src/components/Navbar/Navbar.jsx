@@ -23,18 +23,18 @@ const Navbar = ({ userName, onLogout }) => {
                     {userName ? (
                         <>
                             <span className="user-name">{userName}</span>
-                            <button className="logout-btn" onClick={handleLogout}>Logout</button>
+                            <div className="dropdown">
+                                <button className="dropbtn">{userName || "Your Name"}</button>
+                                <div className="dropdown-content">
+                                    <a href="/profile">Profile</a>
+                                    <a href="/settings">Settings</a>
+                                    <a href="#" onClick={handleLogout}>Logout</a> {/* Added logout here */}
+                                </div>
+                            </div>
                         </>
                     ) : (
                         <a href="/contact">Contact</a>
                     )}
-                    <div className="dropdown">
-                        <button className="dropbtn">{userName || "Your Name"}</button>
-                        <div className="dropdown-content">
-                            <a href="/profile">Profile</a>
-                            <a href="/settings">Settings</a>
-                        </div>
-                    </div>
                 </div>
             </nav>
             <div className="sidebar">
