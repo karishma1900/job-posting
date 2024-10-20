@@ -9,18 +9,18 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 const Login = ({ onLogin }) => {
-    const navigate = useNavigate(); // Use useNavigate instead of useHistory
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         companyEmail: '',
         password: ''
     });
 
     useEffect(() => {
-        const user = localStorage.getItem('user'); // Check for logged-in user
+        const user = localStorage.getItem('userName'); // Check for logged-in user by userName
         if (user) {
             navigate('/home'); // Redirect to home if user is logged in
         }
-    }, [navigate]); // Remove history and use navigate here
+    }, [navigate]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,7 +32,7 @@ const Login = ({ onLogin }) => {
         try {
             const response = await axios.post('https://job-posting-6lg2.onrender.com/login', formData);
             toast.success(response.data.message);
-            onLogin(); // Call the login handler to update authentication state
+            onLogin(formData.companyEmail); // Pass the email to the login handler
             navigate('/home'); // Redirect to home page
         } catch (error) {
             if (error.response && error.response.data.message) {
@@ -82,8 +82,8 @@ const Login = ({ onLogin }) => {
 
                     <button type="submit">Login</button>
                     <div className="login-link">
-                    <p>Already have an account? <Link to="/register">Login here</Link>.</p>
-                </div>
+                        <p>Already have an account? <Link to="/register">Login here</Link>.</p>
+                    </div>
                 </form>
             </div>
         </div>
