@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 const JobPostingDisplay = () => {
-    const [jobPosts, setJobPosts] = useState([]);
     const [formData, setFormData] = useState({
         jobTitle: '',
         jobDescription: '',
@@ -11,19 +10,6 @@ const JobPostingDisplay = () => {
         endDate: ''
     });
     const [message, setMessage] = useState('');
-
-    useEffect(() => {
-        const fetchJobPosts = async () => {
-            try {
-                const response = await axios.get('https://job-posting-6lg2.onrender.com/job-posts');
-                setJobPosts(response.data);
-            } catch (error) {
-                console.error('Error fetching job posts:', error);
-            }
-        };
-
-        fetchJobPosts();
-    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -42,8 +28,6 @@ const JobPostingDisplay = () => {
                 candidateEmail: '',
                 endDate: ''
             });
-            // Optionally, fetch the job posts again to include the new one
-            fetchJobPosts();
         } catch (error) {
             console.error('Error posting job:', error);
             setMessage('Error posting job.');
@@ -52,24 +36,9 @@ const JobPostingDisplay = () => {
 
     return (
         <div>
-            <h2>Job Listings</h2>
-            {jobPosts.length > 0 ? (
-                jobPosts.map((job) => (
-                    <div key={job._id} className="job-post">
-                        <h3>{job.jobTitle}</h3>
-                        <p>{job.jobDescription}</p>
-                        <p>Experience Level: {job.experienceLevel}</p>
-                        <p>Candidate Email: {job.candidateEmail}</p>
-                        <p>End Date: {new Date(job.endDate).toLocaleDateString()}</p>
-                    </div>
-                ))
-            ) : (
-                <p>No job postings found.</p>
-            )}
-
+            <h2>Post a New Job</h2>
+            {message && <p>{message}</p>}
             <div className="job-post-form">
-                <h2>Post a New Job</h2>
-                {message && <p>{message}</p>}
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="jobTitle">Job Title</label>
