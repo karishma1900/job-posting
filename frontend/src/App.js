@@ -20,6 +20,7 @@ const App = () => {
         if (storedUserName) {
             setIsAuthenticated(true);
             setUserName(storedUserName);
+            console.log("Retrieved user from localStorage:", storedUserName); // Debug log
         }
     }, []);
 
@@ -27,6 +28,7 @@ const App = () => {
         setIsAuthenticated(true);
         setUserName(email); // Set the email as username
         localStorage.setItem('userName', email); // Store email in localStorage
+        console.log("Stored user in localStorage:", email); // Debug log
         toast.success('Login successful!');
     };
 
