@@ -36,7 +36,7 @@ const JobPostingDisplay = () => {
     };
 
     return (
-        <div>
+        <div className = "main-body">
             <h2>Post a New Job</h2>
             {message && <p>{message}</p>}
             <div className="job-post-form">
