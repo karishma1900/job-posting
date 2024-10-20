@@ -32,11 +32,9 @@ const userSchema = new mongoose.Schema({
     employeeSize: Number,
     password: String,
     verified: { type: Boolean, default: false },
-});
+}, { collection: 'user' });
 
 const User = mongoose.model('User', userSchema);
-
-// Job Posting Schema
 const jobPostSchema = new mongoose.Schema({
     jobTitle: String,
     jobDescription: String,
@@ -57,7 +55,43 @@ const transporter = nodemailer.createTransport({
         pass: process.env.EMAIL_PASS,
     },
 });
+app.get('/job-posts', async (req, res) => {
+    try {
+        const jobPosts = await JobPost.find();
+        res.status(200).json(jobPosts);
+    } catch (error) {
+        console.error('Error fetching job posts:', error);
+        res.status(500).json({ message: 'Error fetching job posts.' });
+    }
+});
 
+
+// Registration Endpoint
+app.post('/register', async (req, res) => {
+    const { name, companyName, phoneNo, companyEmail, employeeSize, password } = req.body;
+
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = new User({ name, companyName, phoneNo, companyEmail, employeeSize, password: hashedPassword });
+        await newUser.save();
+
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: companyEmail,
+            subject: 'Email Verification',
+            text: Hello ${name},\n\nPlease verify your email by clicking the link: ${process.env.BASE_URL}/verify?email=${companyEmail}\n\nThank you!,
+        };
+
+        await transporter.sendMail(mailOptions);
+        res.status(201).json({ message: 'Registration successful! Verification email sent.' });
+    } catch (error) {
+        console.error('Error during registration:', error);
+        if (error.code === 11000) {
+            return res.status(400).json({ message: 'Email already registered.' });
+        }
+        res.status(500).json({ message: 'Error during registration.' });
+    }
+});
 // Job Posting Endpoint
 app.post('/job-post', async (req, res) => {
     const { jobTitle, jobDescription, experienceLevel, candidateEmail, endDate } = req.body;
@@ -75,62 +109,6 @@ app.post('/job-post', async (req, res) => {
     } catch (error) {
         console.error('Error posting job:', error);
         res.status(500).json({ message: 'Error posting job.' });
-    }
-});
-
-// Job Listings Endpoint
-app.get('/job-posts', async (req, res) => {
-    try {
-        const jobPosts = await JobPost.find();
-        res.status(200).json(jobPosts);
-    } catch (error) {
-        console.error('Error fetching job posts:', error);
-        res.status(500).json({ message: 'Error fetching job posts.' });
-    }
-});
-
-// Registration Endpoint
-app.post('/register', async (req, res) => {
-    const { name, companyName, phoneNo, companyEmail, employeeSize, password } = req.body;
-
-    try {
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ name, companyName, phoneNo, companyEmail, employeeSize, password: hashedPassword });
-        await newUser.save();
-
-        const mailOptions = {
-            from: process.env.EMAIL_USER,
-            to: companyEmail,
-            subject: 'Email Verification',
-            text: `Hello ${name},\n\nPlease verify your email by clicking the link: ${process.env.BASE_URL}/verify?email=${companyEmail}\n\nThank you!`,
-        };
-
-        await transporter.sendMail(mailOptions);
-        res.status(201).json({ message: 'Registration successful! Verification email sent.' });
-    } catch (error) {
-        console.error('Error during registration:', error);
-        if (error.code === 11000) {
-            return res.status(400).json({ message: 'Email already registered.' });
-        }
-        res.status(500).json({ message: 'Error during registration.' });
-    }
-});
-
-// Email Verification Endpoint
-app.get('/verify', async (req, res) => {
-    const { email } = req.query;
-    try {
-        const user = await User.findOne({ companyEmail: email });
-        if (!user) {
-            return res.status(404).json({ message: 'User not found.' });
-        }
-
-        user.verified = true; // Set verified to true
-        await user.save();
-        res.status(200).json({ message: 'Email verified successfully!' });
-    } catch (error) {
-        console.error('Error during email verification:', error);
-        res.status(500).json({ message: 'Error during email verification.' });
     }
 });
 
@@ -160,7 +138,37 @@ app.post('/login', async (req, res) => {
     }
 });
 
+// Verification Endpoint
+app.get('/verify', async (req, res) => {
+    const { email } = req.query;
+
+    if (!email) {
+        return res.status(400).json({ message: 'Email is required for verification.' });
+    }
+
+    try {
+        const user = await User.findOne({ companyEmail: email });
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        if (user.verified) {
+            return res.status(400).json({ message: 'User is already verified.' });
+        }
+
+        user.verified = true;
+        await user.save();
+
+        res.status(200).json({ message: 'Email successfully verified!' });
+    } catch (error) {
+        console.error('Error during email verification:', error);
+        res.status(500).json({ message: 'Error during email verification.' });
+    }
+});
+
 // Start Server
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+    console.log(Server is running on http://localhost:${PORT});
+});in this job listing and postung is not there  copy job post and posts // index.js
+
