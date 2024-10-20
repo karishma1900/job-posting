@@ -52,3 +52,7 @@
 .submit-btn:hover {
     background-color: #0056b3;
 }
+.main-body{
+text-align:center;
+    justify-content:center;
+}
