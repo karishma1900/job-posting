@@ -6,12 +6,18 @@ import axios from 'axios';
 const Verify = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    
+
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
         const companyEmail = queryParams.get('email'); // Extract email from query parameters
         
         const verifyEmail = async () => {
+            if (!companyEmail) {
+                toast.error('No email provided for verification.');
+                navigate('/'); // Redirect to home if no email is provided
+                return;
+            }
+
             try {
                 // Make a request to your backend for verification
                 const response = await axios.get(`https://job-posting-6lg2.onrender.com/verify?email=${companyEmail}`);
@@ -33,13 +39,8 @@ const Verify = () => {
                 }
             }
         };
-        
-        if (companyEmail) {
-            verifyEmail(); // Proceed if companyEmail exists
-        } else {
-            toast.error('No email provided for verification.');
-            navigate('/'); // Redirect to home if no email is provided
-        }
+
+        verifyEmail(); // Call the function to verify email
     }, [location.search, navigate]);
 
     return (
