@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import JobPostingDisplay from "../../components/JobListing/JobListing"; // Ensure the import path is correct
-import Navbar from "../../components/Navbar/Navbar";
+
 import './Home.css'
 
 const Home = () => {
@@ -13,7 +13,7 @@ const Home = () => {
 
   return (
     <div className="button">
-      <Navbar />
+      
       <div className="main-body">
         <JobPostingDisplay />
         <button onClick={handleCreateInterview}>Create Interview</button> {/* Attach the click handler */}
