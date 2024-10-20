@@ -4,17 +4,15 @@ import logo from '../../assets/cuvet.jpg'; // Adjust this path as necessary
 import './Navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
-import {  Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Navbar = ({ userName, onLogout }) => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
         onLogout();
-        navigate('/login');
+        navigate('/login'); // Redirect to login after logout
     };
-    
 
     return (
         <div className="main">
@@ -23,25 +21,25 @@ const Navbar = ({ userName, onLogout }) => {
                     <img src={logo} alt="Logo" className="navbar-logo" />
                 </div>
                 <div className="navbar-right">
-                    {userName ? (
+                    {userName ? ( // Check if userName (email) exists
                         <div className="dropdown">
-                            <button className="dropbtn">Hello, {userName}</button>
+                            <button className="dropbtn">Hello, {userName}</button> {/* Display email here */}
                             <div className="dropdown-content">
-                                <a href="#" onClick={handleLogout}>Logout</a>
+                                <a href="#" onClick={handleLogout}>Logout</a> {/* Logout option */}
                             </div>
                         </div>
                     ) : (
-                        <a href="/contact">Contact</a>
+                        <Link to="/contact">Contact</Link> // Show Contact link if not logged in
                     )}
                 </div>
             </nav>
             <div className="sidebar">
-                <a href="/home" className="sidebar-item">
-                   <Link to="/login"><FontAwesomeIcon icon={faHome} className="sidebar-icon" /></Link>
-                </a>
+                <Link to="/home" className="sidebar-item">
+                    <FontAwesomeIcon icon={faHome} className="sidebar-icon" />
+                </Link>
             </div>
         </div>
     );
 };
 
-export default Navbar; // Make sure this line is present for default export
+export default Navbar; // Ensure this line is present for default export
