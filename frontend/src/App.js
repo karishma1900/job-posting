@@ -8,21 +8,21 @@ import Login from './pages/LoginPage/LoginPage';
 import Home from './pages/Home/Home';
 import Navbar from './components/Navbar/Navbar';
 import JobPostForm from './components/JobPosting/JobPosting';
-import Verify from './components/verify/Verify'; // Corrected import path
+import Verify from './components/verify/Verify'; // Import the Verify component
 
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [userName, setUserName] = useState('');
+    const [userName, setUserName] = useState(''); // State for user name
 
     const handleLogin = (name) => {
         setIsAuthenticated(true);
-        setUserName(name);
+        setUserName(name); // Set the user name on login
         toast.success('Login successful!');
     };
 
     const handleLogout = () => {
         setIsAuthenticated(false);
-        setUserName('');
+        setUserName(''); // Clear user name on logout
         toast.info('You have logged out.');
     };
 
