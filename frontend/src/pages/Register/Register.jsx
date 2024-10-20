@@ -1,12 +1,12 @@
+// src/Register.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser , faBuilding, faPhone, faEnvelope, faUsers, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faBuilding, faPhone, faEnvelope, faUsers, faLock } from '@fortawesome/free-solid-svg-icons';
 import logo from "../../assets/cuvet.jpg";
 import "./Register.css";
-import { Link } from 'react-router-dom';
-
+import {  Link } from 'react-router-dom';
 const Register = () => {
     const [formData, setFormData] = useState({
         name: '',
@@ -22,7 +22,7 @@ const Register = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handle Submit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         try {
@@ -154,7 +154,7 @@ const Register = () => {
                     <button type="submit" disabled={loading}>
                         {loading ? 'Registering...' : 'Register'}
                     </button>
-                    <div className="login-link">
+                  <div className="login-link">
                     <p>Already have an account? <Link to="/login">Login here</Link>.</p>
                 </div>
                 </form>
