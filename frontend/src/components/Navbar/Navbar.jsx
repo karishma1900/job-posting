@@ -22,13 +22,11 @@ const Navbar = ({ userName, onLogout }) => {
                 <div className="navbar-right">
                     {userName ? (
                         <>
-                            <span className="user-name">{userName}</span>
+                            <span className="user-name">Hello, {userName}</span>
                             <div className="dropdown">
-                                <button className="dropbtn">{userName || "Your Name"}</button>
+                                <button className="dropbtn">{userName}</button>
                                 <div className="dropdown-content">
-                                    <a href="/profile">Profile</a>
-                                    <a href="/settings">Settings</a>
-                                    <a href="#" onClick={handleLogout}>Logout</a> {/* Added logout here */}
+                                    <a href="#" onClick={handleLogout}>Logout</a> {/* Only Logout link */}
                                 </div>
                             </div>
                         </>
