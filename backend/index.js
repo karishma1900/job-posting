@@ -55,6 +55,8 @@ const transporter = nodemailer.createTransport({
         pass: process.env.EMAIL_PASS,
     },
 });
+
+// Get job posts
 app.get('/job-posts', async (req, res) => {
     try {
         const jobPosts = await JobPost.find();
@@ -64,7 +66,6 @@ app.get('/job-posts', async (req, res) => {
         res.status(500).json({ message: 'Error fetching job posts.' });
     }
 });
-
 
 // Registration Endpoint
 app.post('/register', async (req, res) => {
@@ -79,7 +80,7 @@ app.post('/register', async (req, res) => {
             from: process.env.EMAIL_USER,
             to: companyEmail,
             subject: 'Email Verification',
-           text: `Hello ${name},\n\nPlease verify your email by clicking the link: ${process.env.BASE_URL}/verify?email=${companyEmail}\n\nThank you!`,
+            text: `Hello ${name},\n\nPlease verify your email by clicking the link: ${process.env.BASE_URL}/verify?email=${companyEmail}\n\nThank you!`,
         };
 
         await transporter.sendMail(mailOptions);
@@ -92,6 +93,7 @@ app.post('/register', async (req, res) => {
         res.status(500).json({ message: 'Error during registration.' });
     }
 });
+
 // Job Posting Endpoint
 app.post('/job-post', async (req, res) => {
     const { jobTitle, jobDescription, experienceLevel, candidateEmail, endDate } = req.body;
@@ -125,7 +127,7 @@ app.post('/login', async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: 'User not found.' });
         }
-        
+
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ message: 'Invalid credentials.' });
@@ -171,4 +173,3 @@ app.get('/verify', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
-
