@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import "./JobPosting.css"
+import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for Toastify
+import "./JobPosting.css";
 
 const JobPostingDisplay = () => {
     const [formData, setFormData] = useState({
@@ -11,6 +14,7 @@ const JobPostingDisplay = () => {
         endDate: ''
     });
     const [message, setMessage] = useState('');
+    const navigate = useNavigate(); // Hook to programmatically navigate
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -22,6 +26,9 @@ const JobPostingDisplay = () => {
         try {
             const response = await axios.post('https://job-posting-6lg2.onrender.com/job-post', formData);
             setMessage(response.data.message);
+            // Show success notification
+            toast.success('Job posted successfully!');
+            // Reset the form data
             setFormData({
                 jobTitle: '',
                 jobDescription: '',
@@ -29,14 +36,20 @@ const JobPostingDisplay = () => {
                 candidateEmail: '',
                 endDate: ''
             });
+            // Redirect to home page after a short delay
+            setTimeout(() => {
+                navigate('/home');
+            }, 2000); // Redirects after 2 seconds
         } catch (error) {
             console.error('Error posting job:', error);
             setMessage('Error posting job.');
+            // Show error notification
+            toast.error('Error posting job.');
         }
     };
 
     return (
-        <div className = "main-body">
+        <div className="main-body">
             <h2>Post a New Job</h2>
             {message && <p>{message}</p>}
             <div className="job-post-form">
@@ -102,6 +115,7 @@ const JobPostingDisplay = () => {
                     <button type="submit" className="submit-btn">Post Job</button>
                 </form>
             </div>
+            <ToastContainer /> {/* Toast notification container */}
         </div>
     );
 };
