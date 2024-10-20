@@ -7,7 +7,7 @@ import Register from './pages/Register/Register';
 import Login from './pages/LoginPage/LoginPage';
 import Home from './pages/Home/Home';
 import Navbar from './components/Navbar/Navbar';
-import JobPostForm from './components/JobPosting/JobPosting';
+import JobPostingDisplay from './components/JobPosting/JobPosting';
 import Verify from './components/verify/Verify'; // Import the Verify component
 
 const App = () => {
@@ -35,7 +35,7 @@ const App = () => {
                 <Route path="/login" element={isAuthenticated ? <Navigate to="/home" /> : <Login onLogin={handleLogin} />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/register" element={isAuthenticated ? <Navigate to="/home" /> : <Register onLogin={handleLogin} />} />
-                <Route path="/jobform" element={<JobPostForm />} />
+                <Route path="/jobform" element={<JobPostingDisplay />} />
                 <Route path="/verify" element={<Verify />} />
             </Routes>
         </Router>
