@@ -170,5 +170,5 @@ app.get('/verify', async (req, res) => {
 // Start Server
 app.listen(PORT, () => {
     console.log(Server is running on http://localhost:${PORT});
-});in this job listing and postung is not there  copy job post and posts // index.js
+});
 
