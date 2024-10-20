@@ -43,6 +43,7 @@ const App = () => {
     };
 
     return (
+        <BrowserRouter>
         <Router>
             <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
             {isAuthenticated && <Navbar userName={userName} onLogout={handleLogout} />}
@@ -55,6 +56,7 @@ const App = () => {
                 <Route path="/verify" element={<Verify />} />
             </Routes>
         </Router>
+        </BrowserRouter>
     );
 };
 
