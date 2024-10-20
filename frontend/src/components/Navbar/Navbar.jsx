@@ -20,16 +20,13 @@ const Navbar = ({ userName, onLogout }) => {
                     <img src={logo} alt="Logo" className="navbar-logo" />
                 </div>
                 <div className="navbar-right">
-                    {userName ? (
-                        <>
-                            <span className="user-name">Hello, {userName}</span>
-                            <div className="dropdown">
-                                <button className="dropbtn">{userName}</button>
-                                <div className="dropdown-content">
-                                    <a href="#" onClick={handleLogout}>Logout</a> {/* Only Logout link */}
-                                </div>
+                    {userName ? ( // Show dropdown if userName exists
+                        <div className="dropdown">
+                            <button className="dropbtn">Hello, {userName}</button>
+                            <div className="dropdown-content">
+                                <a href="#" onClick={handleLogout}>Logout</a>
                             </div>
-                        </>
+                        </div>
                     ) : (
                         <a href="/contact">Contact</a>
                     )}
