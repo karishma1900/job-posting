@@ -10,8 +10,8 @@ const Navbar = ({ userName, onLogout }) => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        onLogout();
-        navigate('/login'); // Redirect to login after logout
+        onLogout(); // Call the logout function passed as a prop
+        navigate('/login'); // Redirect to the login page after logout
     };
 
     return (
@@ -21,15 +21,15 @@ const Navbar = ({ userName, onLogout }) => {
                     <img src={logo} alt="Logo" className="navbar-logo" />
                 </div>
                 <div className="navbar-right">
-                    {userName ? ( // Check if userName (email) exists
+                    {userName ? ( // If userName exists, show greeting and logout
                         <div className="dropdown">
-                            <button className="dropbtn">Hello, {userName}</button> {/* Display email here */}
+                            <button className="dropbtn">Hello, {userName}</button> {/* Display user email */}
                             <div className="dropdown-content">
-                                <a href="#" onClick={handleLogout}>Logout</a> {/* Logout option */}
+                                <a href="#" onClick={handleLogout}>Logout</a> {/* Logout link */}
                             </div>
                         </div>
                     ) : (
-                        <Link to="/contact">Contact</Link> // Show Contact link if not logged in
+                        <Link to="/contact">Contact</Link> // If no user is logged in, show contact link
                     )}
                 </div>
             </nav>
