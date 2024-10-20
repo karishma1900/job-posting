@@ -15,7 +15,7 @@ const Verify = () => {
         const verifyEmail = async () => {
             try {
                 // Make a request to your backend for verification
-                await axios.get(`https://job-posting-6lg2.onrender.com/verify?email=${email}`);
+                await axios.get(`https://job-posting-6lg2.onrender.com/verify?email=${ companyEmail}`);
                 // Notify user of success
                 toast.success('Email verified successfully!');
                 
