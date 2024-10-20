@@ -32,9 +32,9 @@ const userSchema = new mongoose.Schema({
     employeeSize: Number,
     password: String,
     verified: { type: Boolean, default: false },
-}, { collection: 'user' }); // Specify collection name if needed
+}, { collection: 'user' });
 
-const User = mongoose.model('User', userSchema); // Ensure no extra spaces
+const User = mongoose.model('User', userSchema);
 
 // Nodemailer Setup
 const transporter = nodemailer.createTransport({
@@ -97,6 +97,35 @@ app.post('/login', async (req, res) => {
     } catch (error) {
         console.error('Error during login:', error);
         res.status(500).json({ message: 'Error during login.' });
+    }
+});
+
+// Verification Endpoint
+app.get('/verify', async (req, res) => {
+    const { email } = req.query;
+
+    if (!email) {
+        return res.status(400).json({ message: 'Email is required for verification.' });
+    }
+
+    try {
+        const user = await User.findOne({ companyEmail: email });
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        if (user.verified) {
+            return res.status(400).json({ message: 'User is already verified.' });
+        }
+
+        user.verified = true;
+        await user.save();
+
+        res.status(200).json({ message: 'Email successfully verified!' });
+    } catch (error) {
+        console.error('Error during email verification:', error);
+        res.status(500).json({ message: 'Error during email verification.' });
     }
 });
 
