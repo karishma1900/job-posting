@@ -1,10 +1,3 @@
-import React from 'react';
-import logo from '../../assets/cuvet.jpg'; // Replace with your actual logo path
-import './Navbar.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
-
 const Navbar = ({ userName, onLogout }) => {
     const navigate = useNavigate();
 
@@ -22,7 +15,7 @@ const Navbar = ({ userName, onLogout }) => {
                 <div className="navbar-right">
                     {userName ? ( // Show dropdown if userName exists
                         <div className="dropdown">
-                            <button className="dropbtn">Hello, {userName}</button>
+                            <button className="dropbtn">Hello, {userName}</button> {/* Displaying the email */}
                             <div className="dropdown-content">
                                 <a href="#" onClick={handleLogout}>Logout</a>
                             </div>
@@ -40,5 +33,3 @@ const Navbar = ({ userName, onLogout }) => {
         </div>
     );
 };
-
-export default Navbar;
