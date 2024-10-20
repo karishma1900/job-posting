@@ -9,6 +9,9 @@ import { useNavigate, Link } from 'react-router-dom';
 const Navbar = ({ userName, onLogout }) => {
     const navigate = useNavigate();
 
+    // Debug log to see what userName is being passed
+    console.log("Navbar userName prop:", userName); // Debug log
+
     const handleLogout = () => {
         onLogout(); // Call the logout function passed as a prop
         navigate('/login'); // Redirect to the login page after logout
