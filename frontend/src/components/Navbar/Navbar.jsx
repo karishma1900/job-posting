@@ -5,6 +5,7 @@ import './Navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import {  Link } from 'react-router-dom';
 
 const Navbar = ({ userName, onLogout }) => {
     const navigate = useNavigate();
@@ -13,6 +14,7 @@ const Navbar = ({ userName, onLogout }) => {
         onLogout();
         navigate('/login');
     };
+    
 
     return (
         <div className="main">
@@ -35,7 +37,7 @@ const Navbar = ({ userName, onLogout }) => {
             </nav>
             <div className="sidebar">
                 <a href="/home" className="sidebar-item">
-                    <FontAwesomeIcon icon={faHome} className="sidebar-icon" />
+                   <Link to="/login"><FontAwesomeIcon icon={faHome} className="sidebar-icon" /></Link>
                 </a>
             </div>
         </div>
