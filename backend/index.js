@@ -56,7 +56,6 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-// Get job posts
 app.get('/job-posts', async (req, res) => {
     try {
         const jobPosts = await JobPost.find();
@@ -72,6 +71,12 @@ app.post('/register', async (req, res) => {
     const { name, companyName, phoneNo, companyEmail, employeeSize, password } = req.body;
 
     try {
+        // Check if the email is already registered
+        const existingUser = await User.findOne({ companyEmail });
+        if (existingUser) {
+            return res.status(400).json({ message: 'Email already registered.' });
+        }
+
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({ name, companyName, phoneNo, companyEmail, employeeSize, password: hashedPassword });
         await newUser.save();
@@ -87,9 +92,6 @@ app.post('/register', async (req, res) => {
         res.status(201).json({ message: 'Registration successful! Verification email sent.' });
     } catch (error) {
         console.error('Error during registration:', error);
-        if (error.code === 11000) {
-            return res.status(400).json({ message: 'Email already registered.' });
-        }
         res.status(500).json({ message: 'Error during registration.' });
     }
 });
@@ -127,7 +129,7 @@ app.post('/login', async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: 'User not found.' });
         }
-
+        
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ message: 'Invalid credentials.' });
