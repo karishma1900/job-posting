@@ -82,7 +82,7 @@ const Login = ({ onLogin }) => {
 
                     <button type="submit">Login</button>
                     <div className="login-link">
-                        <p>Already have an account? <Link to="/register">Login here</Link>.</p>
+                        <p>Already have an account? <Link to="/register">Register here</Link>.</p>
                     </div>
                 </form>
             </div>
