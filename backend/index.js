@@ -32,9 +32,9 @@ const userSchema = new mongoose.Schema({
     employeeSize: Number,
     password: String,
     verified: { type: Boolean, default: false },
-});
+}, { collection: 'user' }); // Specify collection name if needed
 
-const User = mongoose.model('User ', userSchema);
+const User = mongoose.model('User', userSchema); // Ensure no extra spaces
 
 // Nodemailer Setup
 const transporter = nodemailer.createTransport({
@@ -53,8 +53,8 @@ app.post('/register', async (req, res) => {
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser  = new User({ name, companyName, phoneNo, companyEmail, employeeSize, password: hashedPassword });
-        await newUser .save();
+        const newUser = new User({ name, companyName, phoneNo, companyEmail, employeeSize, password: hashedPassword });
+        await newUser.save();
 
         const mailOptions = {
             from: process.env.EMAIL_USER,
@@ -85,7 +85,7 @@ app.post('/login', async (req, res) => {
     try {
         const user = await User.findOne({ companyEmail });
         if (!user) {
-            return res.status(404).json({ message: 'User  not found.' });
+            return res.status(404).json({ message: 'User not found.' });
         }
         
         const isMatch = await bcrypt.compare(password, user.password);
