@@ -51,7 +51,7 @@ const App = () => {
                 <Route path="/home" element={<ProtectedRoute element={<Home />} />} />
                 <Route path="/register" element={isAuthenticated ? <Navigate to="/home" /> : <Register onLogin={handleLogin} />} />
                 <Route path="/jobform" element={<ProtectedRoute element={<JobPostingDisplay />} />} />
-                <Route path="" element={<Verify />} />
+                <Route path="/verify" element={<Verify />} />
             </Routes>
         </BrowserRouter>
     );
