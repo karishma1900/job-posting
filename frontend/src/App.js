@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -31,11 +30,22 @@ const App = () => {
             <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
             {isAuthenticated && <Navbar userName={userName} onLogout={handleLogout} />}
             <Routes>
+                {/* Redirect to Home if authenticated, otherwise show Register */}
                 <Route path="/" element={isAuthenticated ? <Navigate to="/home" /> : <Register onLogin={handleLogin} />} />
+                
+                {/* Redirect to Home if authenticated, otherwise show Login */}
                 <Route path="/login" element={isAuthenticated ? <Navigate to="/home" /> : <Login onLogin={handleLogin} />} />
-                <Route path="/home" element={<Home />} />
+                
+                {/* Protected Home route */}
+                <Route path="/home" element={isAuthenticated ? <Home /> : <Navigate to="/login" />} />
+                
+                {/* Redirect to Home if authenticated, otherwise show Register */}
                 <Route path="/register" element={isAuthenticated ? <Navigate to="/home" /> : <Register onLogin={handleLogin} />} />
-                <Route path="/jobform" element={<JobPostForm />} />
+                
+                {/* Protected JobPostForm route */}
+                <Route path="/jobform" element={isAuthenticated ? <JobPostForm /> : <Navigate to="/login" />} />
+                
+                {/* Email verification route */}
                 <Route path="/verify" element={<Verify />} />
             </Routes>
         </Router>
