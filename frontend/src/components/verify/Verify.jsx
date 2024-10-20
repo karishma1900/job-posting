@@ -1,4 +1,3 @@
-// src/components/Verify.js
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -16,8 +15,9 @@ const Verify = () => {
             try {
                 // Make a request to your backend for verification
                 const response = await axios.get(`https://job-posting-6lg2.onrender.com/verify?email=${companyEmail}`);
+                
                 // Notify user of success
-                toast.success(response.data.message); // Show the response message
+                toast.success(response.data.message);
               
                 // Redirect to home after 3 seconds
                 setTimeout(() => {
@@ -27,9 +27,9 @@ const Verify = () => {
                 console.error('Error during email verification:', error);
                 // Check if the error has a response and show the message if it does
                 if (error.response) {
-                    toast.error(error.response.data.message); // Show specific error message from server
+                    toast.error(error.response.data.message);
                 } else {
-                    toast.error('Verification failed. Please try again.'); // Generic error message
+                    toast.error('Verification failed. Please try again.');
                 }
             }
         };
