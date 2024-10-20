@@ -10,7 +10,7 @@ const Verify = () => {
     
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
-        const email = queryParams.get('email');
+        const companyEmail = queryParams.get('email');
         
         const verifyEmail = async () => {
             try {
