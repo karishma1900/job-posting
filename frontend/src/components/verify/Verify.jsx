@@ -29,7 +29,7 @@ const Verify = () => {
             }
         };
         
-        if (email) {
+        if (companyEmail) {
             verifyEmail();
         } else {
             toast.error('No email provided for verification.');
