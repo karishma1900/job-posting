@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter , Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter , Route, Routes, Navigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Register from './pages/Register/Register';
@@ -44,7 +44,7 @@ const App = () => {
 
     return (
         <BrowserRouter>
-        <Router>
+       
             <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
             {isAuthenticated && <Navbar userName={userName} onLogout={handleLogout} />}
             <Routes>
@@ -55,7 +55,7 @@ const App = () => {
                 <Route path="/jobform" element={<ProtectedRoute element={<JobPostingDisplay />} />} />
                 <Route path="/verify" element={<Verify />} />
             </Routes>
-        </Router>
+       
         </BrowserRouter>
     );
 };
