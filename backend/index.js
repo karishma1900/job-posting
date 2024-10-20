@@ -1,4 +1,5 @@
 // index.js
+
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -6,7 +7,6 @@ const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
-const path = require('path');
 
 dotenv.config();
 
@@ -59,8 +59,8 @@ const transporter = nodemailer.createTransport({
         pass: process.env.EMAIL_PASS,
     },
 });
+// index.js (Add this route before starting the server)
 
-// Fetch Job Posts
 app.get('/job-posts', async (req, res) => {
     try {
         const jobPosts = await JobPost.find();
@@ -70,6 +70,8 @@ app.get('/job-posts', async (req, res) => {
         res.status(500).json({ message: 'Error fetching job posts.' });
     }
 });
+
+
 
 // Registration Endpoint
 app.post('/register', async (req, res) => {
@@ -162,13 +164,6 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-// Serve React app for all other routes except your API routes
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
 
 // Start Server
 app.listen(PORT, () => {
