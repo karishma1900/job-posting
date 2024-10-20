@@ -1,9 +1,17 @@
+// Navbar.js
+import React from 'react';
+import logo from '../../assets/cuvet.jpg'; // Adjust this path as necessary
+import './Navbar.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+
 const Navbar = ({ userName, onLogout }) => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        onLogout(); // This will handle the actual logout logic in the parent component
-        navigate('/login'); // Redirect to login page after logout
+        onLogout();
+        navigate('/login');
     };
 
     return (
@@ -13,9 +21,9 @@ const Navbar = ({ userName, onLogout }) => {
                     <img src={logo} alt="Logo" className="navbar-logo" />
                 </div>
                 <div className="navbar-right">
-                    {userName ? ( // Show dropdown if userName exists
+                    {userName ? (
                         <div className="dropdown">
-                            <button className="dropbtn">Hello, {userName}</button> {/* Displaying the email */}
+                            <button className="dropbtn">Hello, {userName}</button>
                             <div className="dropdown-content">
                                 <a href="#" onClick={handleLogout}>Logout</a>
                             </div>
@@ -33,3 +41,5 @@ const Navbar = ({ userName, onLogout }) => {
         </div>
     );
 };
+
+export default Navbar; // Make sure this line is present for default export
