@@ -1,5 +1,4 @@
-// src/App.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,17 +11,28 @@ import Verify from './components/verify/Verify'; // Import the Verify component
 
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [userName, setUserName] = useState(''); // State for user name
+    const [userName, setUserName] = useState('');
+
+    // Effect to check localStorage for user authentication status
+    useEffect(() => {
+        const storedUserName = localStorage.getItem('userName');
+        if (storedUserName) {
+            setIsAuthenticated(true);
+            setUserName(storedUserName);
+        }
+    }, []);
 
     const handleLogin = (name) => {
         setIsAuthenticated(true);
-        setUserName(name); // Set the user name on login
+        setUserName(name);
+        localStorage.setItem('userName', name); // Store userName in localStorage
         toast.success('Login successful!');
     };
 
     const handleLogout = () => {
         setIsAuthenticated(false);
-        setUserName(''); // Clear user name on logout
+        setUserName('');
+        localStorage.removeItem('userName'); // Remove userName from localStorage
         toast.info('You have logged out.');
     };
 
