@@ -1,5 +1,3 @@
-// index.js
-
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -36,18 +34,7 @@ const userSchema = new mongoose.Schema({
     verified: { type: Boolean, default: false },
 });
 
-const User = mongoose.model('User', userSchema);
-
-// Job Posting Schema
-const jobPostSchema = new mongoose.Schema({
-    jobTitle: String,
-    jobDescription: String,
-    experienceLevel: String,
-    candidateEmail: String,
-    endDate: Date,
-});
-
-const JobPost = mongoose.model('JobPost', jobPostSchema);
+const User = mongoose.model('User ', userSchema);
 
 // Nodemailer Setup
 const transporter = nodemailer.createTransport({
@@ -59,19 +46,6 @@ const transporter = nodemailer.createTransport({
         pass: process.env.EMAIL_PASS,
     },
 });
-// index.js (Add this route before starting the server)
-
-app.get('/job-posts', async (req, res) => {
-    try {
-        const jobPosts = await JobPost.find();
-        res.status(200).json(jobPosts);
-    } catch (error) {
-        console.error('Error fetching job posts:', error);
-        res.status(500).json({ message: 'Error fetching job posts.' });
-    }
-});
-
-
 
 // Registration Endpoint
 app.post('/register', async (req, res) => {
@@ -79,8 +53,8 @@ app.post('/register', async (req, res) => {
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ name, companyName, phoneNo, companyEmail, employeeSize, password: hashedPassword });
-        await newUser.save();
+        const newUser  = new User({ name, companyName, phoneNo, companyEmail, employeeSize, password: hashedPassword });
+        await newUser .save();
 
         const mailOptions = {
             from: process.env.EMAIL_USER,
@@ -100,44 +74,6 @@ app.post('/register', async (req, res) => {
     }
 });
 
-// Email Verification Endpoint
-app.get('/verify', async (req, res) => {
-    const { email } = req.query;
-    try {
-        const user = await User.findOne({ companyEmail: email });
-        if (!user) {
-            return res.status(404).json({ message: 'User not found.' });
-        }
-
-        user.verified = true; // Set verified to true
-        await user.save();
-        res.status(200).json({ message: 'Email verified successfully!' });
-    } catch (error) {
-        console.error('Error during email verification:', error);
-        res.status(500).json({ message: 'Error during email verification.' });
-    }
-});
-
-// Job Posting Endpoint
-app.post('/job-post', async (req, res) => {
-    const { jobTitle, jobDescription, experienceLevel, candidateEmail, endDate } = req.body;
-
-    try {
-        const newJobPost = new JobPost({
-            jobTitle,
-            jobDescription,
-            experienceLevel,
-            candidateEmail,
-            endDate,
-        });
-        await newJobPost.save();
-        res.status(201).json({ message: 'Job posted successfully!' });
-    } catch (error) {
-        console.error('Error posting job:', error);
-        res.status(500).json({ message: 'Error posting job.' });
-    }
-});
-
 // Login Endpoint
 app.post('/login', async (req, res) => {
     const { companyEmail, password } = req.body;
@@ -149,7 +85,7 @@ app.post('/login', async (req, res) => {
     try {
         const user = await User.findOne({ companyEmail });
         if (!user) {
-            return res.status(404).json({ message: 'User not found.' });
+            return res.status(404).json({ message: 'User  not found.' });
         }
         
         const isMatch = await bcrypt.compare(password, user.password);
@@ -163,7 +99,6 @@ app.post('/login', async (req, res) => {
         res.status(500).json({ message: 'Error during login.' });
     }
 });
-
 
 // Start Server
 app.listen(PORT, () => {
