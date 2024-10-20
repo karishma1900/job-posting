@@ -59,8 +59,8 @@ const transporter = nodemailer.createTransport({
         pass: process.env.EMAIL_PASS,
     },
 });
+// index.js (Add this route before starting the server)
 
-// Job Posts Retrieval Endpoint
 app.get('/job-posts', async (req, res) => {
     try {
         const jobPosts = await JobPost.find();
@@ -70,6 +70,8 @@ app.get('/job-posts', async (req, res) => {
         res.status(500).json({ message: 'Error fetching job posts.' });
     }
 });
+
+
 
 // Registration Endpoint
 app.post('/register', async (req, res) => {
@@ -162,8 +164,8 @@ app.post('/login', async (req, res) => {
     }
 });
 
+
 // Start Server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
-    console.log('Server is successfully connected to MongoDB');
 });
